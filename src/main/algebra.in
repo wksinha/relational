@@ -1,1 +1,1 @@
-PRODUCT (SELECTION (*) (student)) (SELECTION (*) (course))
+PROJECTION (year) (SELECTION (year=1) (student))

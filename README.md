@@ -13,7 +13,16 @@ A DSL for using Relational Algebra on top of SurrealDB.
 ## Technology
 - Language: Python
 - Modules: Lark
+    - Run the following in the `relational` directory:
+    ```
+    pip install -r requirements.txt
+    ```
 - Database: SurrealDB
+    - Run the following to populate the DB data from the `relational/src/main` directory:
+    ```
+    bash init.sh
+    ```
+- Testing: Bash
 
 ## Methodology
 - Studied SurrealDB syntax and semantics, and references for writing a DSL, specifically Relational Algebra to SQL.
@@ -35,9 +44,10 @@ A DSL for using Relational Algebra on top of SurrealDB.
 ## Testing
 - Used bash scripts to run the application against custom testcases for the DSL.
     - Generated output was compared against expected output.
-    - Examples:
-    ```
+    - Examples:  
+    
     RA:
+    ```
     SELECTION (*) (student)
     SELECTION (year = 2) (SELECTION  (sid > 10) (student))
     PROJECTION (year, sid) (student)
@@ -45,8 +55,10 @@ A DSL for using Relational Algebra on top of SurrealDB.
     UNION ( SELECTION (year=1) (student) ) ( SELECTION (year=2) (student) )
     DIFFERENCE (PROJECTION (sid) (SELECTION (*) (enrollment))) (PROJECTION (sid) (student))
     PRODUCT (SELECTION (*) (student)) (SELECTION (*) (course))
+    ```
 
     SQL (Generated):
+    ```
     SELECT * FROM (student);
     SELECT * FROM (SELECT * FROM (student) WHERE sid > 10) WHERE year = 2;
     SELECT year, sid FROM (student);
@@ -55,7 +67,32 @@ A DSL for using Relational Algebra on top of SurrealDB.
     (SELECT sid FROM (SELECT * FROM (enrollment))) EXCEPT (SELECT sid FROM (student));
     (SELECT * FROM (student)) CROSS JOIN (SELECT * FROM (course));
     ```
+    - From the `relational/src/tests` directory, run:
+    ```
+    bash test_dsl.sh
+    ```
+    Expected Output:
+    ```
+    Test passed: difference_test_1.in
+    Test passed: product_test_1.in
+    Test passed: projection_test_1.in
+    Test passed: projection_test_2.in
+    Test passed: selection_test_1.in
+    Test passed: selection_test_2.in
+    Test passed: union_test_1.in
+    ```
 - Checked error-free execution of the pipeline with SurrealDB for supported operations.
+    - To check the pipeline, from the `relational/src/main` directory, run:
+    ```
+    bash check_pipeline.sh
+    ```
+    Expected Output:
+    ```
+    Pipeline passed for selection_test_1.in
+    Pipeline passed for selection_test_2.in
+    Pipeline passed for projection_test_1.in
+    Pipeline passed for projection_test_2.in
+    ```
 
 ## Results
 - Created a DSL that takes Relational Algebra and converts it into SQL queries.
