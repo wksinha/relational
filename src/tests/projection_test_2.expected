@@ -1,0 +1,1 @@
+SELECT year FROM (SELECT * FROM (student) WHERE year=1);
