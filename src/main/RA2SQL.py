@@ -55,9 +55,8 @@ ra_grammar = """
 """
 
 
-parser = Lark(ra_grammar, start=START)
-
 def parse_ra_to_sql(ra_expr):
+    parser = Lark(ra_grammar, start=START)
     return parser.parse(ra_expr)
 
 def resolve_tree(node):
