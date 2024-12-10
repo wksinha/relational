@@ -56,10 +56,24 @@ ra_grammar = """
 
 
 def parse_ra_to_sql(ra_expr):
+    '''
+    Uses Lark to parse the Relational Algebra Expression
+    Args:
+        ra_expr (string): Relational Algebra Expression
+    Returns:
+        AST (lark Tree): Lark parsed AST
+    '''
     parser = Lark(ra_grammar, start=START)
     return parser.parse(ra_expr)
 
 def resolve_tree(node):
+    '''
+    Traverses and Interprets the Lark AST, conditionally processing different types of nodes.
+    Args:
+        node (lark Tree/Token): AST Parsed by Lark. (Subtree)
+    Returns:
+        SQL expression (string) for the subtree.
+    '''
     expression = ""
     nodetype = str(type(node))
     if nodetype == LARK_TREE:
@@ -158,6 +172,13 @@ def resolve_tree(node):
     return expression
 
 def cleanup(sqlquery):
+    '''
+    Removes redundant "(" ")" from the sql query.
+    Arguments:
+        sqlquery (string): The query to be cleaned.
+    Returns:
+        sqlquery (string): The cleaned query
+    '''
     sqlquery = sqlquery[1:-2] + sqlquery[-1:]
     return sqlquery
 
@@ -167,7 +188,7 @@ def main():
         expr = input()
     except IOError as e:
         print(e, file=sys.stderr)
-        return        
+        return
 
     try:
         sqlquery = resolve_tree(parse_ra_to_sql(expr))
