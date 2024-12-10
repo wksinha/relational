@@ -27,3 +27,4 @@ CREATE enrollment SET cid = "csDSAPS", sid = 21, percentage = 94;
 CREATE enrollment SET cid = "csPOPL", sid = 11, percentage = 84;
 CREATE enrollment SET cid = "csPOPL", sid = 12, percentage = 89;
 
+CREATE enrollment SET name = "Ghost", cid = "invalid", sid = -1, percentage = 100;
