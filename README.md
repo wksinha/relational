@@ -9,7 +9,7 @@ A DSL for using Relational Algebra on top of SurrealDB.
     pip install -r requirements.txt
     ```
 - Database: SurrealDB
-    - Run the following to populate the DB data from the `relational/src/main` directory:
+    - Run the following to populate the DB data from the `relational/code/src/main` directory:
     ```
     bash init.sh
     ```
@@ -41,7 +41,7 @@ A DSL for using Relational Algebra on top of SurrealDB.
     (SELECT sid FROM (SELECT * FROM (enrollment))) EXCEPT (SELECT sid FROM (student));
     (SELECT * FROM (student)) CROSS JOIN (SELECT * FROM (course));
     ```
-    - From the `relational/src/tests` directory, run:
+    - From the `relational/code/src/tests` directory, run:
     ```
     bash test_dsl.sh
     ```
@@ -56,7 +56,7 @@ A DSL for using Relational Algebra on top of SurrealDB.
     Test passed: union_test_1.in
     ```
 - Checked error-free execution of the pipeline with SurrealDB for supported operations.
-    - To check the pipeline, from the `relational/src/main` directory, run:
+    - To check the pipeline, from the `relational/code/src/main` directory, run:
     ```
     bash check_pipeline.sh
     ```

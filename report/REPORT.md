@@ -3,6 +3,34 @@ A DSL for using Relational Algebra on top of SurrealDB.
 Author: Warul Kumar Sinha (2023201045)  
 [GitHub](https://github.com/wksinha/relational)
 
+### Operations and Grammar
+```
+Relational Algebra to SQL Converter
+
+Supported Operations:
+1. selection (σ)
+2. projection (π)
+3. union (∪)
+4. difference (−)
+5. cartesian product (×)
+
+Grammar:
+    start: query -> start
+    query: relation | selection | projection | union | difference | product-> query
+    relation: KEY -> relation
+    selection: "SELECTION" "(" condition ")" "(" query ")" -> selection
+    projection: "PROJECTION" "(" attributes ")" "(" query ")" -> projection
+    union: "UNION" "(" query ")" "(" query")" -> union
+    difference: "DIFFERENCE" "(" query ")" "(" query")" -> difference
+    product: "PRODUCT" "(" query ")" "(" query ")" -> product
+    condition: WILDCARD | STRING [ (STRING)*] -> condition
+    attributes: STRING [("," STRING)*] -> attributes
+    WILDCARD: "*"
+    KEY: /[a-zA-Z0-9]+/
+    STRING: /[a-zA-Z0-9>=<]+/
+    ignore WS (whitespace)
+```
+
 ### Motivation
 - SurrealDB is a multi-model database.
 - It supports both relational and graph queries.
@@ -28,7 +56,7 @@ Author: Warul Kumar Sinha (2023201045)
     ```
     surreal sql --endpoint http://localhost:8000 --username root --password root --namespace popl --database relational
     ```
-    - Run the following to populate the DB data from the `relational/src/main` directory:
+    - Run the following to populate the DB data from the `relational/code/src/main` directory:
     ```
     bash init.sh
     ```
@@ -77,7 +105,7 @@ Author: Warul Kumar Sinha (2023201045)
     (SELECT sid FROM (SELECT * FROM (enrollment))) EXCEPT (SELECT sid FROM (student));
     (SELECT * FROM (student)) CROSS JOIN (SELECT * FROM (course));
     ```
-    - From the `relational/src/tests` directory, run:
+    - From the `relational/code/src/tests` directory, run:
     ```
     bash test_dsl.sh
     ```
@@ -92,7 +120,7 @@ Author: Warul Kumar Sinha (2023201045)
     Test passed: union_test_1.in
     ```
 - Checked error-free execution of the pipeline with SurrealDB for supported operations.
-    - To check the pipeline, from the `relational/src/main` directory, run:
+    - To check the pipeline, from the `relational/code/src/main` directory, run:
     ```
     bash check_pipeline.sh
     ```
